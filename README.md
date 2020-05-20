@@ -22,3 +22,7 @@ cd awtk-widget-number-label; scons
 ```
 ./bin/demo_number_label
 ```
+
+## 文档
+
+[AWTK 自定义控件规范](https://github.com/zlgopen/awtk/blob/master/docs/custom_widget_rules.md)
