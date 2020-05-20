@@ -30,7 +30,7 @@ if hasattr(awtk, 'CC'):
     STRIP=awtk.STRIP,
     CPPPATH   = awtk.CPPPATH + APP_CPPPATH,
     LINKFLAGS = awtk.LINKFLAGS + APP_LINKFLAGS,
-    LIBS      = APP_LIBS + awtk.SHARED_LIBS,
+    LIBS      = APP_LIBS + awtk.LIBS,
     LIBPATH   = APP_LIBPATH + awtk.LIBPATH,
     CCFLAGS   = APP_CCFLAGS + awtk.CCFLAGS, 
     OS_SUBSYSTEM_CONSOLE=awtk.OS_SUBSYSTEM_CONSOLE,

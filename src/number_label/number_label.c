@@ -97,10 +97,8 @@ static ret_t number_label_on_destroy(widget_t* widget) {
 }
 
 static ret_t number_label_paint_text(widget_t* widget, canvas_t* c, wstr_t* text) {
-  rect_t r;
   int32_t x = 0;
   int32_t y = 0;
-  int32_t dot_index = 0;
   int32_t w = widget->w;
   int32_t h = widget->h;
   float_t font_height = 0;
@@ -117,7 +115,6 @@ static ret_t number_label_paint_text(widget_t* widget, canvas_t* c, wstr_t* text
   int32_t margin = style_get_int(style, STYLE_ID_MARGIN, 0);
   int32_t margin_top = style_get_int(style, STYLE_ID_MARGIN_TOP, margin);
   int32_t margin_left = style_get_int(style, STYLE_ID_MARGIN_LEFT, margin);
-  int32_t margin_right = style_get_int(style, STYLE_ID_MARGIN_RIGHT, margin);
   int32_t margin_bottom = style_get_int(style, STYLE_ID_MARGIN_BOTTOM, margin);
   uint16_t font_size = style_get_int(style, STYLE_ID_FONT_SIZE, TK_DEFAULT_FONT_SIZE);
   uint16_t decimal_font_size = font_size * number_label->decimal_font_size_scale;
