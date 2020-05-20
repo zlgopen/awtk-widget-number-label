@@ -11,7 +11,7 @@ SOURCES=Glob('number_label/*.c')
 
 EXPORT_DEF=''
 if OS_NAME == 'Windows':
-  EXPORT_DEF = ' /DEF:"src/dllexport.def" '
+  EXPORT_DEF = ' /DEF:"src/number_label.def" '
 
 if 'WITH_AWTK_SO' in os.environ:
   LIBS=['awtk'];

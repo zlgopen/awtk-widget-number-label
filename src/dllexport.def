@@ -1,6 +1,0 @@
-﻿LIBRARY   number_label
-EXPORTS
-    number_label_register
-    number_label_create
-    number_label_cast
-
