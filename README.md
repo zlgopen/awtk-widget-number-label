@@ -1,6 +1,12 @@
 # awtk-widget-number-label
 
-number-label 控件
+number_label 控件。用于显示数值的文本控件。
+ 
+*. 可以通过指定属性 format 来改变小数的有效位数。
+
+*. 可以通过指定属性 decimal\_font\_size\_scale 来减小小数部分的字体大小，以强调整数部分的重要性。
+
+![](docs/images/ui.jpg)
 
 ## 准备
 
