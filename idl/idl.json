@@ -1,5 +1,20 @@
 [
   {
+    "params": [],
+    "annotation": {
+      "global": true
+    },
+    "desc": "注册数值文本控件。",
+    "name": "number_label_register",
+    "return": {
+      "type": "ret_t",
+      "desc": "返回RET_OK表示成功，否则表示失败。"
+    },
+    "type": "method",
+    "header": "src/number_label_register.h",
+    "level": 1
+  },
+  {
     "type": "class",
     "methods": [
       {
@@ -124,19 +139,6 @@
         },
         "desc": "设置数值。",
         "name": "number_label_set_value",
-        "return": {
-          "type": "ret_t",
-          "desc": "返回RET_OK表示成功，否则表示失败。"
-        }
-      },
-      {
-        "params": [],
-        "annotation": {
-          "scriptable": true,
-          "static": true
-        },
-        "desc": "注册数值文本控件。",
-        "name": "number_label_register",
         "return": {
           "type": "ret_t",
           "desc": "返回RET_OK表示成功，否则表示失败。"

@@ -226,12 +226,3 @@ widget_t* number_label_cast(widget_t* widget) {
 
   return widget;
 }
-
-#include "base/widget_factory.h"
-
-ret_t number_label_register(void) {
-  widget_factory_t* f = widget_factory();
-  widget_factory_register(f, WIDGET_TYPE_NUMBER_LABEL, number_label_create);
-
-  return RET_OK;
-}

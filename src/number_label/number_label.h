@@ -155,16 +155,6 @@ ret_t number_label_set_decimal_font_size_scale(widget_t* widget, double decimal_
  */
 ret_t number_label_set_value(widget_t* widget, double value);
 
-/**
- * @method number_label_register
- * 注册数值文本控件。
- *
- * @annotation ["scriptable", "static"]
- *
- * @return {ret_t} 返回RET_OK表示成功，否则表示失败。
- */
-ret_t number_label_register(void);
-
 #define NUMBER_LABEL_PROP_FORMAT "format"
 #define NUMBER_LABEL_PROP_DECIMAL_FONT_SIZE_SCALE "decimal_font_size_scale"
 
