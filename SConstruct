@@ -1,15 +1,14 @@
 ﻿import os
-import scripts.app_helper as app
+import scripts.awtk_locator as locator
 
-def initArgument(name, defVal):
-    val = ARGUMENTS.get(name, '')
-    if len(val) == 0:
-        ARGUMENTS[name] = defVal
+def getAppHelper(ARGUMENTS):
+    locator.init(ARGUMENTS)
 
-initArgument('LCD', '800_480')
-helper = app.Helper(ARGUMENTS);
+    from app_helper_base import AppHelperBase
+    return AppHelperBase(ARGUMENTS)
+
+helper = getAppHelper(ARGUMENTS)
 helper.set_dll_def('src/number_label.def').set_libs(['number_label']).call(DefaultEnvironment)
 
-CustomWidgetSConscriptFiles = []
-SConscriptFiles = CustomWidgetSConscriptFiles + ['src/SConscript', 'demos/SConscript', 'tests/SConscript']
+SConscriptFiles = ['src/SConscript', 'demos/SConscript', 'tests/SConscript']
 SConscript(SConscriptFiles)
