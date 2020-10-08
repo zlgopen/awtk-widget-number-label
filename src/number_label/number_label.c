@@ -56,7 +56,22 @@ static ret_t number_label_get_prop(widget_t* widget, const char* name, value_t* 
   number_label_t* number_label = NUMBER_LABEL(widget);
   return_value_if_fail(widget != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
-  if (tk_str_eq(name, WIDGET_PROP_VALUE)) {
+  if (tk_str_eq(name, WIDGET_PROP_MIN)) {
+    value_set_double(v, number_label->min);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_MAX)) {
+    value_set_double(v, number_label->max);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_STEP)) {
+    value_set_double(v, number_label->step);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_READONLY)) {
+    value_set_bool(v, number_label->readonly);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_LOOP)) {
+    value_set_bool(v, number_label->loop);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_VALUE)) {
     value_set_double(v, number_label->value);
     return RET_OK;
   } else if (tk_str_eq(name, WIDGET_PROP_FORMAT)) {
@@ -71,9 +86,25 @@ static ret_t number_label_get_prop(widget_t* widget, const char* name, value_t* 
 }
 
 static ret_t number_label_set_prop(widget_t* widget, const char* name, const value_t* v) {
+  number_label_t* number_label = NUMBER_LABEL(widget);
   return_value_if_fail(widget != NULL && name != NULL && v != NULL, RET_BAD_PARAMS);
 
-  if (tk_str_eq(name, WIDGET_PROP_VALUE)) {
+  if (tk_str_eq(name, WIDGET_PROP_MIN)) {
+    number_label->min = value_double(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_MAX)) {
+    number_label->max = value_double(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_STEP)) {
+    number_label->step = value_double(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_READONLY)) {
+    number_label->readonly = value_bool(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_LOOP)) {
+    number_label->loop = value_bool(v);
+    return RET_OK;
+  } else if (tk_str_eq(name, WIDGET_PROP_VALUE)) {
     number_label_set_value(widget, value_double(v));
     return RET_OK;
   } else if (tk_str_eq(name, WIDGET_PROP_FORMAT)) {
@@ -191,15 +222,112 @@ static ret_t number_label_on_paint_self(widget_t* widget, canvas_t* c) {
   return_value_if_fail(widget->astyle != NULL, RET_BAD_PARAMS);
 
   memset(buff, 0x00, sizeof(buff));
-  tk_snprintf(buff, sizeof(buff) - 1, format, number_label->value);
+
+  if (strchr(format, 'd') != NULL) {
+    tk_snprintf(buff, sizeof(buff) - 1, format, (int)(number_label->value));
+  } else {
+    tk_snprintf(buff, sizeof(buff) - 1, format, number_label->value);
+  }
 
   wstr_set_utf8(text, buff);
 
   return number_label_paint_text(widget, c, text);
 }
 
+ret_t number_label_set_limit(widget_t* widget, double min, double max, double step) {
+  number_label_t* number_label = NUMBER_LABEL(widget);
+  return_value_if_fail(number_label != NULL, RET_BAD_PARAMS);
+
+  number_label->min = min;
+  number_label->max = max;
+  number_label->step = step;
+
+  return RET_OK;
+}
+
+ret_t number_label_set_readonly(widget_t* widget, bool_t readonly) {
+  number_label_t* number_label = NUMBER_LABEL(widget);
+  return_value_if_fail(number_label != NULL, RET_BAD_PARAMS);
+
+  number_label->readonly = readonly;
+
+  return RET_OK;
+}
+
+ret_t number_label_set_loop(widget_t* widget, bool_t loop) {
+  number_label_t* number_label = NUMBER_LABEL(widget);
+  return_value_if_fail(number_label != NULL, RET_BAD_PARAMS);
+
+  number_label->loop = loop;
+
+  return RET_OK;
+}
+
+static ret_t number_label_add_delta(widget_t* widget, double delta) {
+  number_label_t* number_label = NUMBER_LABEL(widget);
+  double value = number_label->value + delta;
+
+  if (number_label->min < number_label->max) {
+    if (value < number_label->min) {
+      value = number_label->loop ? number_label->max : number_label->min;
+    }
+
+    if (value > number_label->max) {
+      value = number_label->loop ? number_label->min : number_label->max;
+    }
+  }
+
+  if (!tk_fequal(number_label->value, value)) {
+    value_change_event_t evt;
+    value_change_event_init(&evt, EVT_VALUE_WILL_CHANGE, widget);
+    value_set_double(&(evt.old_value), number_label->value);
+    value_set_double(&(evt.new_value), value);
+
+    if (widget_dispatch(widget, (event_t*)&evt) != RET_STOP) {
+    	number_label->value = value;
+      evt.e.type = EVT_VALUE_CHANGED;
+      widget_dispatch(widget, (event_t*)&evt);
+      widget_invalidate(widget, NULL);
+    }
+  }
+
+  return RET_OK;
+}
+
+ret_t number_label_on_event(widget_t* widget, event_t* e) {
+  ret_t ret = RET_OK;
+  number_label_t* number_label = NUMBER_LABEL(widget);
+
+  switch (e->type) {
+    case EVT_KEY_DOWN: {
+      key_event_t* evt = (key_event_t*)e;
+      if (widget->grab_focus && !(number_label->readonly)) {
+        return_value_if_fail(number_label->step != 0, RET_FAIL);
+
+        if (evt->key == TK_KEY_UP || evt->key == TK_KEY_LEFT) {
+          number_label_add_delta(widget, number_label->step);
+          ret = RET_STOP;
+        } else if (evt->key == TK_KEY_DOWN || evt->key == TK_KEY_RIGHT) {
+          number_label_add_delta(widget, -number_label->step);
+          ret = RET_STOP;
+        }
+      }
+      break;
+    }
+  }
+
+  return ret;
+}
+
 static const char* s_number_label_properties[] = {NUMBER_LABEL_PROP_DECIMAL_FONT_SIZE_SCALE,
-                                                  WIDGET_PROP_FORMAT, WIDGET_PROP_VALUE, NULL};
+                                                  WIDGET_PROP_MIN,
+                                                  WIDGET_PROP_MAX,
+                                                  WIDGET_PROP_STEP,
+                                                  WIDGET_PROP_LOOP,
+                                                  WIDGET_PROP_READONLY,
+                                                  WIDGET_PROP_FORMAT,
+                                                  WIDGET_PROP_VALUE,
+                                                  NULL};
 
 TK_DECL_VTABLE(number_label) = {.size = sizeof(number_label_t),
                                 .type = WIDGET_TYPE_NUMBER_LABEL,
@@ -210,12 +338,17 @@ TK_DECL_VTABLE(number_label) = {.size = sizeof(number_label_t),
                                 .on_paint_self = number_label_on_paint_self,
                                 .set_prop = number_label_set_prop,
                                 .get_prop = number_label_get_prop,
+                                .on_event = number_label_on_event,
                                 .on_destroy = number_label_on_destroy};
 
 widget_t* number_label_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h) {
   number_label_t* number_label =
       NUMBER_LABEL(widget_create(parent, TK_REF_VTABLE(number_label), x, y, w, h));
   number_label->format = tk_strdup(NUMBER_LABEL_DEFAULT_FORMAT);
+  number_label->min = 0;
+  number_label->max = 0;
+  number_label->step = 1;
+  number_label->readonly = TRUE;
   number_label->decimal_font_size_scale = 0.6;
 
   return (widget_t*)number_label;
