@@ -308,7 +308,7 @@
       },
       {
         "name": "min",
-        "desc": "最小值或最小长度。",
+        "desc": "最小值。",
         "type": "double",
         "annotation": {
           "set_prop": true,
@@ -321,7 +321,7 @@
       },
       {
         "name": "max",
-        "desc": "最大值或最大长度。",
+        "desc": "最大值。",
         "type": "double",
         "annotation": {
           "set_prop": true,
