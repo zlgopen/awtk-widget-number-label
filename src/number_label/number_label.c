@@ -22,7 +22,7 @@
 #include "tkc/mem.h"
 #include "tkc/utils.h"
 #include "base/widget_vtable.h"
-#include "number_label/number_label.h"
+#include "number_label.h"
 
 ret_t number_label_set_format(widget_t* widget, const char* format) {
   number_label_t* number_label = NUMBER_LABEL(widget);
