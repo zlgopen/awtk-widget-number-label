@@ -348,7 +348,7 @@ widget_t* number_label_create(widget_t* parent, xy_t x, xy_t y, wh_t w, wh_t h) 
   number_label->min = 0;
   number_label->max = 0;
   number_label->step = 1;
-  number_label->readonly = TRUE;
+  number_label->readonly = FALSE;
   number_label->decimal_font_size_scale = 0.6;
 
   return (widget_t*)number_label;

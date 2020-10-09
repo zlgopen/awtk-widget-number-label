@@ -9,11 +9,11 @@
 
     <label text="Focusable:" />
     <number_label name="num7" style="grab_focus" format="%d" 
-        readonly="false" focusable="true" return_key_to_grab_focus="true" value="100"/>
+       return_key_to_grab_focus="true" value="100"/>
     
     <label text="Focusable:" />
     <number_label name="num8" style="grab_focus" format="%.1lf" loop="true"
-      readonly="false" focusable="true" return_key_to_grab_focus="true" value="5" min="0" max="10" step="0.1"/>
+       return_key_to_grab_focus="true" value="5" min="0" max="10" step="0.1"/>
 
     <button name="close" text="Close" floating="true" x="c" y="b:10" w="128" h="30" />
   </view>
