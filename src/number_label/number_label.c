@@ -284,7 +284,7 @@ static ret_t number_label_add_delta(widget_t* widget, double delta) {
     value_set_double(&(evt.new_value), value);
 
     if (widget_dispatch(widget, (event_t*)&evt) != RET_STOP) {
-    	number_label->value = value;
+      number_label->value = value;
       evt.e.type = EVT_VALUE_CHANGED;
       widget_dispatch(widget, (event_t*)&evt);
       widget_invalidate(widget, NULL);
@@ -301,7 +301,7 @@ ret_t number_label_on_event(widget_t* widget, event_t* e) {
   switch (e->type) {
     case EVT_KEY_DOWN: {
       key_event_t* evt = (key_event_t*)e;
-      if (widget->grab_focus && !(number_label->readonly)) {
+      if (!(number_label->readonly)) {
         return_value_if_fail(number_label->step != 0, RET_FAIL);
 
         if (evt->key == TK_KEY_UP || evt->key == TK_KEY_LEFT) {
