@@ -157,6 +157,7 @@ static ret_t number_label_paint_text(widget_t* widget, canvas_t* c, wstr_t* text
   }
   int_part_len++;
   decimal_part_len = text->size - int_part_len;
+  decimal_part_len = tk_max(decimal_part_len, 0);
 
   canvas_set_text_color(c, tc);
   canvas_set_text_align(c, align_h, align_v);
