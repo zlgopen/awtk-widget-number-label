@@ -47,20 +47,19 @@ pip install Pillow
 
 2. 编译
 
-* 编译PC版本
+* 编译 PC 版本
 
 ```
 scons
 ```
 
-* 编译LINUX FB版本
+* 编译 LINUX FB 版本
 
 ```
 scons LINUX_FB=true
 ```
 
-> 完整编译选项请参考[编译选项](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/build_options.md)
-
+> 完整编译选项请参考 [编译选项](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/build_options.md)
 
 3. 运行
 
@@ -71,3 +70,11 @@ scons LINUX_FB=true
 ## 文档
 
 [完善自定义控件](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/improve_generated_widget.md)
+
+## 注意事项
+
+> 当 readonly 属性不为 true 时，可以用方向键修改控件的值。如果你使用方向键切换焦点，会存在焦点进入本控件后无法出来的问题。为了避免这个问题，可以采用以下几种措施之一：
+
+* readonly 设置为 true
+* 把按键事件重新映射。请参考 [键值映射](https://github.com/zlgopen/awtk/blob/master/docs/map_key.md)。
+* 使用极简键盘。请参考 [支持极简键盘](https://github.com/zlgopen/awtk/blob/master/docs/how_to_support_5keys_3keys.md)。
