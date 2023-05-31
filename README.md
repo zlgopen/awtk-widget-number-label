@@ -1,10 +1,6 @@
 # awtk-widget-number-label
 
 number_label 控件。用于显示数值的文本控件。
- 
-*. 可以通过指定属性 format 来改变小数的有效位数。
-
-*. 可以通过指定属性 decimal\_font\_size\_scale 来减小小数部分的字体大小，以强调整数部分的重要性。
 
 ![](docs/images/ui.jpg)
 
@@ -67,14 +63,37 @@ scons LINUX_FB=true
 ./bin/demo
 ```
 
-## 文档
+## 如何使用 number-label 控件
 
-[完善自定义控件](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/improve_generated_widget.md)
+在 xml 文件中创建 number-label 控件
 
-## 注意事项
+```xml
+<number_label name="number_label" x="c" y="m" w="100" h="50" value="200.2" format="%.2lf" decimal_font_size_scale="0.5"/>
+```
 
-> 当 readonly 属性不为 true 时，可以用方向键修改控件的值。如果你使用方向键切换焦点，会存在焦点进入本控件后无法出来的问题。为了避免这个问题，可以采用以下几种措施之一：
+number_label 各属性的功能如下表所示：
+
+| 属性名                  | 作用                                         |
+| ----------------------- | -------------------------------------------- |
+| value                   | 数值                                         |
+| format                  | 格式化显示的值                               |
+| decimal_font_size_scale | 小数部分字体大小与整数部分字体大小之比       |
+| min                     | 最小值                                       |
+| max                     | 最大值                                       |
+| step                    | 步长，用于上下键修改时，一次增加或减少的数值 |
+| loop                    | 用上下键修改时，值是否循环                   |
+| readonly                | 编辑器是否只读                               |
+
+如果需要修改字体大小或颜色，可以通过修改 `font_size` 和 `text_color` 样式来修改。
+
+**注意事项**
+
+当 readonly 属性不为 true 时，可以用方向键修改控件的值。如果同时使用方向键切换焦点，会存在焦点进入本控件后无法出来的问题。为了避免这个问题，可以采用以下几种措施之一：
 
 * readonly 设置为 true
 * 把按键事件重新映射。请参考 [键值映射](https://github.com/zlgopen/awtk/blob/master/docs/map_key.md)。
 * 使用极简键盘。请参考 [支持极简键盘](https://github.com/zlgopen/awtk/blob/master/docs/how_to_support_5keys_3keys.md)。
+
+## 文档
+
+[完善自定义控件](https://github.com/zlgopen/awtk-widget-generator/blob/master/docs/improve_generated_widget.md)
