@@ -1,8 +1,10 @@
 <window theme="main" move_focus_prev_key="up" move_focus_next_key="down">
   <view x="c" y="m" w="100%" h="100%" children_layout="default(h=40,c=2,s=10,m=10)">
-    <number_label name="num1" format="%d" value="100"/>
+    <number_label name="num1" format="%d" value="100"
+      animation="value(from=90, to=100, duration=1000)"/>
     <number_label name="num2" format="%d" value="200"/>
-    <number_label name="num3" format="%.1lf" value="100.20"/>
+    <number_label name="num3" format="%.1lf" value="100.20"
+      animation="value(from=90.2, to=100.20, duration=2000)"/>
     <number_label name="num4" format="%.2lf" value="100.20"/>
     <number_label name="num5" format="%.3lf" value="200.20"/>
     <number_label name="num6" format="%.4lf" value="300.33" style="green"/>
