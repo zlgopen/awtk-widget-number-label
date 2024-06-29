@@ -155,7 +155,11 @@ static ret_t number_label_paint_text(widget_t* widget, canvas_t* c, wstr_t* text
   while (text->str[int_part_len] != 0 && text->str[int_part_len] != '.') {
     int_part_len++;
   }
-  int_part_len++;
+
+  if (text->str[int_part_len] == '.') {
+    int_part_len++;
+  }
+
   decimal_part_len = text->size - int_part_len;
   decimal_part_len = tk_max(decimal_part_len, 0);
 
