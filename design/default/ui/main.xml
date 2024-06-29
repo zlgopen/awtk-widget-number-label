@@ -2,6 +2,8 @@
   <view x="c" y="m" w="100%" h="100%" children_layout="default(h=40,c=2,s=10,m=10)">
     <number_label name="num1" format="%d" value="100"
       animation="value(from=90, to=100, duration=1000)"/>
+    <number_label name="num2" format="%d" value="0"/>
+    <number_label name="num2" format="%d" value="10.5"/>
     <number_label name="num2" format="%d" value="200"/>
     <number_label name="num3" format="%.1lf" value="100.20"
       animation="value(from=90.2, to=100.20, duration=2000)"/>
