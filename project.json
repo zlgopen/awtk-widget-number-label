@@ -39,5 +39,8 @@
     "name": "AWTK Designer",
     "version": "1.0.0"
   },
-  "awtkRoot": "${DesignerPath}/SDK/awtk"
+  "awtkRoot": "${DesignerPath}/SDK/awtk",
+  "dependencies": {
+    "awtk": ">=2112"
+  }
 }
